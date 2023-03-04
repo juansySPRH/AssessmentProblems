@@ -1,0 +1,80 @@
+<html>
+    <body>
+        <div style="margin: auto;width: 50%;">
+            <div id="show"></div>
+            <div id="button_show">
+                <button type="button" id="check" style="padding: 15px 32px;" onclick="execute()">Show Equivalent Property Value</button>
+                <button type="button" style="padding: 15px 32px;" onclick='clearMe()'>clear</button>
+            </div>
+            <div id="show_similar_value">
+
+            </div>
+        </div>
+        <script src="quicksort.js">
+            var show = document.getElementById('show')
+            var show_similar_value = document.getElementById('show_similar_value')
+
+            var list__phones = [
+                { brand: 'infinix', name: 'Infinix Zero 5G', network: { technology: '5G'}, display: {type: 'IPS LCD, 120Hz, 500 nits (peak)', size: '6.78 inches, 109.2 cm2', resolution: '1080 x 2460 pixels'}, platform: { os: 'Android 12, XOS 12', chipset: 'Mediatek MT6877V Dimensity 1080', cpu: 'Octa-core (2x2.6 GHz Cortex-A78 & 6x2.0 GHz Cortex-A55)', gpu: 'Mali-G68 MC4'}},
+                { brand: 'infonix', name: 'Infonix One 5g', network: { technology: '5G'}, display: {type: 'IPS LCD, 120Hz, 500 nits (peak)', size: '6.78 inches, 109.2 cm2', resolution: '1080 x 2460 pixels'}, platform: { os: 'Android 12', chipset: 'Mediatek MT6877V Dimensity 1080', cpu: 'Octa-core (2x2.6 GHz Cortex-A78 & 6x2.0 GHz Cortex-A55)', gpu: 'Mali-G68 MC2'}},
+            ]
+
+
+            var storage_1 = []
+            var storage_2 = []
+
+            /**
+             * The function takes an object as an argument and iterates through the object's keys and values. If
+             * the value is an object, the function calls itself and iterates through the nested object's keys and
+             * values. If the value is not an object, the function pushes the key and value to the storage array
+             * @param object - the object to be iterated
+             */
+            const iterator1 = (object) => {
+                for(key in object){
+                    if(typeof object[key] === 'object'){
+                        iterator1(object[key])
+                    }else{
+                        storage_1.push(`${key}: ${object[key]}`)
+                        if(key != 'brand') show.innerHTML += `${key}:  ${object[key]}/<br>`
+                        else show.innerHTML += `<h4>${key}:  ${object[key]}</h4>`
+                    }
+                }
+            }
+            const iterator2 = (object) => {
+                for(key in object){
+                    if(typeof object[key] === 'object'){
+                        iterator2(object[key])
+                    }else{
+                        storage_2.push(`${key}: ${object[key]}`)
+                        if(key != 'brand') show.innerHTML += `${key}:  ${object[key]}/<br>`
+                        else show.innerHTML += `<h4>${key}:  ${object[key]}</h4>`
+                    }
+                }
+            }
+
+
+            /* Iterating through the object and pushing the key and value to the storage array */
+            iterator1(list__phones[0])
+            iterator2(list__phones[1])
+
+            /**
+             * It checks if the value of the first object is present in the second object
+             */
+            const checkPropValue = () => {
+                for(item in storage_1){
+                    if(storage_2.includes(storage_1[item])){
+                        show_similar_value.innerHTML += `<br>${storage_1[item]}<br>`
+                    }
+                }
+            }
+            function clearMe(){
+                document.getElementById('show_similar_value').innerHTML = ""
+                document.getElementById('check').disabled = false;
+            }
+            function execute(){
+                checkPropValue()
+                document.getElementById('check').disabled = true;
+            }
+        </script>
+    </body>
+</html>

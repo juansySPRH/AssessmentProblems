@@ -1,0 +1,64 @@
+<html>
+    <head></head>
+    <body>
+        <div id="content" style="margin: auto; width: 50%;">
+            <div id="input_field">
+                <h4>Input radius</h4>
+                <input type="number" min="1" id="get_radius">
+                <h4>Input height</h4>
+                <input type="number" min="1" id="get_height">
+                <br>
+                <br>
+                <button type="button" id="check" style="padding: 15px 32px;" onclick="execute()">Show Result</button>
+                <button type="button" style="padding: 15px 32px;" onclick='clearMe()'>clear</button>
+            </div>
+            <div id="show-answer"></div>
+        </div>
+        <script>
+            var radius = document.getElementById('get_radius')
+            var height = document.getElementById('get_height')
+            var show = document.getElementById('show-answer')
+
+            /* A class is a blueprint for creating objects with pre-defined properties and methods. */
+            class Cylinder{
+            /**
+             * The constructor function is a special function that is used to create and initialize an object
+             * created within a class
+             * @param height - The height of the cylinder
+             * @param radius - The radius of the cylinder
+             */
+                constructor(height, radius){
+                    this.height = height;
+                    this.radius = radius
+                }
+
+            }
+            /* Creating a new method for the Cylinder class. */
+            Cylinder.prototype.getVolume = (height, radius) => {
+                const pi = 3.1415
+                /* Returning the volume of the cylinder. */
+                return parseFloat(pi*radius*2*height).toFixed(4)
+            }
+
+
+            /* Creating a new instance of the Cylinder class. */
+            const Cy = new Cylinder();
+            
+            /**
+             * The function execute() is called when the button is clicked. It calls the getVolume() function from
+             * the Cylinder.js file and displays the result in the show div
+             */
+            function execute(){
+                console.log(Cy.getVolume(height.value,radius.value))
+                show.innerHTML = `Cylinder Volume: ${Cy.getVolume(height.value,radius.value)}`
+                document.getElementById('check').disabled = true;
+            }
+            
+            function clearMe(){
+                show.innerHTML = ''
+                document.getElementById('check').disabled = false;
+            }
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,99 @@
+<html>
+    <head>
+        <title>Insertion Sort</title>
+    </head>
+    <body >
+
+        <div class="content" style="margin: auto; width: 50%; padding: 10px;">
+            <div class="array-length">
+                <h1>Insertion Sort</h1>
+                <h3>Length of the Array</h3>
+                <h4>Direction: Only accept Positive Number</h4>
+                <input type="number"  id="arrayLength">  
+                <button type="submit" onclick="getArrayLength()" id="length_submit">submit</button>
+                <button type="button" onclick='clearMe()'>clear</button>
+            </div>
+            <div id="show-array">
+            </div>
+            <div id="show-answer">
+
+            </div>
+        </div>
+
+        <script>
+
+            function clearMe(){
+                document.getElementById('show-array').innerHTML = ""
+                document.getElementById('show-answer').innerHTML = ""
+                document.getElementById('length_submit').disabled = false;
+            }
+
+            /**
+             * It takes the length of the array from the user and creates a form to input the array elements
+             */
+            function getArrayLength(){
+                var length = Number(document.getElementById('arrayLength').value);
+                var show = document.getElementById('show-array');
+                /* Checking if the length of the array is less than or equal to 1. If it is, it will clear the
+                innerHTML of the show element. If it is not, it will add the form to input the array elements. */
+                if(length <= 1){
+                    show.innerHTML = ""
+                }else{
+                    show.innerHTML += "<h3> Input Array Element Here to Sort</h3>"
+                    for (let i=0; i<length; i++){
+                        show.innerHTML += i +"&nbsp&nbsp <input type='number' name='array[]' value=''><br>"
+                    }
+                    show.innerHTML += '<button onclick="execute()" type="button">Sort</button>'
+                }
+                
+                document.getElementById('length_submit').disabled = true;
+            }
+            
+            /**
+             * It takes the values from the input fields, converts them into integers, and then passes them to the
+             * quickSort function
+             */
+            function execute(){
+                var get__array = []
+                var array = document.getElementsByName('array[]')
+                var show__answer = document.getElementById('show-answer')
+
+                /* Taking the values from the input fields, converting them into integers, and then pushing them
+                into the get__array array. */
+                for(let i = 0; i < array.length; i++){
+                    get__array.push(parseInt(array[i].value))
+                }
+                /* Calling the quickSort function and passing the get__array array as an argument. */
+                var sorted__array = insertionSort(get__array)
+                /* Creating a new input field for each element in the sorted array. */
+                show__answer.innerHTML += '<br><h3> Sorted Array </h3><br>'
+                for(let i = 0; i < sorted__array.length;i++){
+                    show__answer.innerHTML += `<input type="text" name="sortedArray" value="${sorted__array[i]}" disabled=true"><br>`
+                }
+            }
+
+            /**
+             * We start at the second element in the array and compare it to the element before it. If the element
+             * before it is greater than the element we're comparing, we swap the two elements. We then move on to
+             * the next element and repeat the process
+             * @param array - the array to be sorted
+             * @returns the sorted array
+             */
+            const insertionSort = (array) => {
+                for(let i=1;i<array.length;i++){
+                    var curNum = i - 1 
+                    var temp = array[i]
+                    while(array[curNum] > temp && curNum >= 0){
+                        array[curNum+1] = array[curNum]
+                        curNum--
+                    }
+                    array[curNum+1] = temp
+                }
+                return array
+            }
+
+
+
+        </script>
+    </body>
+</html>

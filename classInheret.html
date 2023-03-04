@@ -1,0 +1,81 @@
+<html>
+    <head>
+        <title>class inheritances</title>
+    </head>
+    <body>
+        <div id="content" style="margin: auto; width: 50%;">
+            <div id="input_field">
+                <h4>Input name</h4>
+                <input type="text" id="get_name" required>
+                <h4>Input score</h4>
+                <input type="text" min="0" id="get_score" required>
+                <h4>Input target score</h4>
+                <input type="number" min="0" id="get_target_score" required>
+                <br>
+                <br>
+                <button type="button" id="check" style="padding: 15px 32px;" onclick="execute()">Show Result</button>
+                <button type="button" style="padding: 15px 32px;" onclick='clearMe()'>clear</button>
+            </div>
+            <div id="show-answer"></div>
+        </div>
+        <script>
+            var name_ = document.getElementById('get_name')
+            var score = document.getElementById('get_score')
+            var target_score = document.getElementById('get_target_score')
+            var show = document.getElementById('show-answer')
+
+            /* A class is a blueprint for creating objects */
+            class Human{
+                constructor(name, score, targetScore){
+                    this.name = name;
+                    this.score = score;
+                    this.targetScore = targetScore;
+                }
+            }
+
+
+            /* Creating a new class called Person that inherits from the Human class. */
+            class Person extends Human{
+                /**
+                 * The constructor function is a special function that is called when a new instance of
+                 * the class is created
+                 * @param name - The name of the player
+                 * @param score - The score of the player
+                 * @param targetScore - The score that the player is trying to reach.
+                 */
+                constructor(name, score, targetScore){
+                    super(name, score, targetScore)
+                }
+                
+                hePassed(){
+                    /* It checks if the name of the person is John. If it is, it returns a
+                    congratulatory message. If it is not, it checks if the score is greater than the
+                    target score. If it is, it returns a congratulatory message. If it is not, it
+                    returns a message that says the person's score. */
+                    if(this.name.toLowerCase() == 'john') return `Congrats ${this.name}!! You Passed with ${this.targetScore}/${this.targetScore}<br>`
+                    else if (this.score > (100 * this.score) / this.targetScore) {
+                        return `Congrats ${this.name}!! You Passed with ${this.score}/${this.targetScore}<br>`
+                    }else{
+                        return `Hi ${this.name}, Your score is ${this.score}/${this.targetScore}<br>`
+                    }
+                }
+            }
+
+            /**
+             * It takes the values of the input fields and creates a new Person object with them
+             */
+            function execute(){
+                /* It checks if the input fields are empty or not. If they are not empty, it creates a
+                new Person object with the values of the input fields. */
+                if(name_.value !== (null || undefined || '') && score.value !== (null || undefined || '') && target_score.value !== (null || undefined || '')){
+                    const J = new Person(name_.value, score.value, target_score.value)
+                    console.log(J.hePassed())
+                    show.innerHTML += J.hePassed()
+                }
+            }
+            function clearMe(){
+                show.innerHTML = ''
+            }
+        </script>
+    </body>
+</html>
